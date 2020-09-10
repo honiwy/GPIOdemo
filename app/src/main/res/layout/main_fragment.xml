@@ -17,6 +17,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 android:text="@string/digital_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -27,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/di"
+                android:textSize="16dp"
                 android:onClick="@{()->viewModel.clickDiSwitch()}"
                 app:layout_constraintStart_toStartOf="@+id/digitalInput"
                 app:layout_constraintTop_toBottomOf="@+id/digitalInput"/>
@@ -66,6 +69,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="40dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 android:text="@string/digital_output"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diSwitch"/>
@@ -76,71 +81,99 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/do1"
+                android:textSize="16dp"
+                android:onClick="@{()->viewModel.clickDo1Switch()}"
                 app:layout_constraintStart_toStartOf="@+id/digitalOutput"
                 app:layout_constraintTop_toBottomOf="@+id/digitalOutput"/>
 
-        <RadioGroup
-                android:id="@+id/dO1NormalStatus"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintDO1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dO1Switch"
-                app:layout_constraintTop_toTopOf="@+id/dO1Switch">
+                android:layout_marginStart="16dp"
+                android:visibility="@{viewModel.isDo1Enabled? View.VISIBLE:View.INVISIBLE}"
+                app:layout_constraintTop_toTopOf="@+id/dO1Switch"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp">
 
-            <RadioButton
-                    android:id="@+id/do1NormalOpen"
+            <RadioGroup
+                    android:id="@+id/dO1NormalStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="@+id/constraintDO1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                <RadioButton
+                        android:id="@+id/do1NormalOpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:checked="true"
+                        android:text="@string/normal_open"/>
+
+                <RadioButton
+                        android:id="@+id/do1NormalClose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/normal_close"/>
+            </RadioGroup>
+
+            <TextView
+                    android:id="@+id/do1PulseTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:checked="true"
-                    android:text="@string/normal_open"/>
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pulse_time"
+                    app:layout_constraintStart_toStartOf="@+id/constraintDO1"
+                    app:layout_constraintTop_toBottomOf="@+id/dO1NormalStatus" android:layout_marginStart="8dp"/>
 
-            <RadioButton
-                    android:id="@+id/do1NormalClose"
+            <SeekBar
+                    android:id="@+id/do1PulseTimeBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/do1PulseTime"/>
+
+            <TextView
+                    android:id="@+id/do1DelayTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="@string/normal_close"/>
-        </RadioGroup>
+                    android:layout_marginTop="16dp"
+                    android:text="@string/delay_time"
+                    app:layout_constraintStart_toStartOf="@+id/dO1NormalStatus"
+                    app:layout_constraintTop_toBottomOf="@+id/do1PulseTimeBar" android:layout_marginStart="8dp"/>
 
-        <TextView
-                android:id="@+id/do1PulseTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/pulse_time"
-                app:layout_constraintStart_toStartOf="@+id/dO1NormalStatus"
-                app:layout_constraintTop_toBottomOf="@+id/dO1NormalStatus"/>
+            <SeekBar
+                    android:id="@+id/do1DelayTimeBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/do1DelayTime"/>
+            <TextView
+                    tools:text="@string/do_display_time"
+                    app:displayTime="@{viewModel.do1PulseSec}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/do1PulseSec"
+                    app:layout_constraintStart_toEndOf="@+id/do1PulseTime"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/do1PulseTime"/>
+            <TextView
+                    tools:text="@string/do_display_time"
+                    app:displayTime="@{viewModel.do1DelaySec}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/do1DelaySec"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/do1DelayTime"
+                    app:layout_constraintStart_toEndOf="@+id/do1DelayTime" android:layout_marginStart="8dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <SeekBar
-                android:id="@+id/do1PulseTimeBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
-                app:layout_constraintStart_toStartOf="@+id/do1PulseTime"
-                app:layout_constraintTop_toBottomOf="@+id/do1PulseTime"/>
-
-        <TextView
-                android:id="@+id/do1DelayTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/delay_time"
-                app:layout_constraintStart_toStartOf="@+id/dO1NormalStatus"
-                app:layout_constraintTop_toBottomOf="@+id/do1PulseTimeBar"/>
-
-        <SeekBar
-                android:id="@+id/do1DelayTimeBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
-                app:layout_constraintStart_toStartOf="@+id/dO1NormalStatus"
-                app:layout_constraintTop_toBottomOf="@+id/do1DelayTime"/>
 
         <Switch
                 android:id="@+id/dO2Switch"
@@ -148,71 +181,91 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/do2"
+                android:textSize="16dp"
+                android:onClick="@{()->viewModel.clickDo2Switch()}"
                 app:layout_constraintStart_toStartOf="@+id/digitalOutput"
-                app:layout_constraintTop_toBottomOf="@+id/do1DelayTimeBar"/>
+                app:layout_constraintTop_toBottomOf="@+id/constraintDO1"/>
 
-        <RadioGroup
-                android:id="@+id/dO2NormalStatus"
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/constraintDO2"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="@{viewModel.isDo2Enabled? View.VISIBLE:View.INVISIBLE}"
+                app:layout_constraintTop_toTopOf="@+id/dO2Switch"
                 app:layout_constraintStart_toEndOf="@+id/dO2Switch"
-                app:layout_constraintTop_toTopOf="@+id/dO2Switch">
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp">
 
-            <RadioButton
-                    android:id="@+id/do2NormalOpen"
+            <RadioGroup
+                    android:id="@+id/dO2NormalStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                <RadioButton
+                        android:id="@+id/do2NormalOpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:checked="true"
+                        android:text="@string/normal_open"/>
+
+                <RadioButton
+                        android:id="@+id/do2NormalClose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/normal_close"/>
+            </RadioGroup>
+            <SeekBar
+                    android:id="@+id/do2DelayTimeBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/do2DelayTime"/>
+            <TextView
+                    android:id="@+id/do2PulseTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:checked="true"
-                    android:text="@string/normal_open"/>
-
-            <RadioButton
-                    android:id="@+id/do2NormalClose"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pulse_time"
+                    app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
+                    app:layout_constraintTop_toBottomOf="@+id/dO2NormalStatus" android:layout_marginStart="8dp"/>
+            <SeekBar
+                    android:id="@+id/do2PulseTimeBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/do2PulseTime"/>
+            <TextView
+                    android:id="@+id/do2DelayTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="@string/normal_close"/>
-        </RadioGroup>
-
-        <TextView
-                android:id="@+id/do2PulseTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/pulse_time"
-                app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
-                app:layout_constraintTop_toBottomOf="@+id/dO2NormalStatus"/>
-
-        <SeekBar
-                android:id="@+id/do2PulseTimeBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
-                app:layout_constraintStart_toStartOf="@+id/do2PulseTime"
-                app:layout_constraintTop_toBottomOf="@+id/do2PulseTime"/>
-
-        <TextView
-                android:id="@+id/do2DelayTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/delay_time"
-                app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
-                app:layout_constraintTop_toBottomOf="@+id/do2PulseTimeBar"/>
-
-        <SeekBar
-                android:id="@+id/do2DelayTimeBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
-                app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
-                app:layout_constraintTop_toBottomOf="@+id/do2DelayTime"/>
+                    android:layout_marginTop="16dp"
+                    android:text="@string/delay_time"
+                    app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
+                    app:layout_constraintTop_toBottomOf="@+id/do2PulseTimeBar" android:layout_marginStart="8dp"/>
+            <TextView
+                    tools:text="@string/do_display_time"
+                    app:displayTime="@{viewModel.do2PulseSec}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/do2PulseSec" app:layout_constraintStart_toEndOf="@+id/do2PulseTime"
+                    android:layout_marginStart="8dp" app:layout_constraintBaseline_toBaselineOf="@+id/do2PulseTime"/>
+            <TextView
+                    tools:text="@string/do_display_time"
+                    app:displayTime="@{viewModel.do2DelaySec}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/do2DelaySec" app:layout_constraintStart_toEndOf="@+id/do2DelayTime"
+                    android:layout_marginStart="8dp" app:layout_constraintBaseline_toBaselineOf="@+id/do2DelayTime"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
                 android:id="@+id/trigger"

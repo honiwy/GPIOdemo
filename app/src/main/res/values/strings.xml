@@ -6,6 +6,7 @@
     <string name="di">DI \u0020 \u0020 \u0020</string>
     <string name="digital_output">Digital Output (DO)</string>
     <string name="do1">DO 1</string>
+    <string name="do_display_time">%d sec</string>
     <string name="do2">DO 2</string>
     <string name="pulse_time">Pulse Time</string>
     <string name="delay_time">Delay Time</string>

@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
+import android.widget.Toast
+import com.avc.app.gpiodemo.GpioDemoApplication
 import com.avc.app.gpiodemo.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -24,6 +27,23 @@ class MainFragment : Fragment() {
         val binding = MainFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
+        binding.do1PulseTimeBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                // Display the current progress of SeekBar
+                viewModel.changeDo1PulseTime(i)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // Do something
+                Toast.makeText(GpioDemoApplication.appContext,"start tracking",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // Do something
+                Toast.makeText(GpioDemoApplication.appContext,"stop tracking",Toast.LENGTH_SHORT).show()
+            }
+        })
 
         return binding.root
     }
