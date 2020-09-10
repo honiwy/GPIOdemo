@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GpioDemo</string>
+    <string name="normal_open">Normal Open</string>
+    <string name="normal_close">Normal Close</string>
+    <string name="digital_input">Digital Input (DI)</string>
+    <string name="di">DI \u0020 \u0020 \u0020</string>
+    <string name="digital_output">Digital Output (DO)</string>
+    <string name="do1">DO 1</string>
+    <string name="do2">DO 2</string>
+    <string name="pulse_time">Pulse Time</string>
+    <string name="delay_time">Delay Time</string>
+    <string name="trigger">Trigger</string>
+</resources>
