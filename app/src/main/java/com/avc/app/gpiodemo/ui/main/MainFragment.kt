@@ -96,11 +96,6 @@ class MainFragment : Fragment() {
             }
         })
 
-        binding.trigger.setOnClickListener {
-            Toast.makeText(GpioDemoApplication.appContext, R.string.trigger_toast, Toast.LENGTH_SHORT).show()
-
-        }
-
         return binding.root
     }
 

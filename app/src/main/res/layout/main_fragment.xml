@@ -136,6 +136,8 @@
                     android:id="@+id/do1PulseTimeBar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:min="1"
+                    android:max="80"
                     app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/do1PulseTime"/>
@@ -153,6 +155,8 @@
                     android:id="@+id/do1DelayTimeBar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:min="1"
+                    android:max="1800"
                     app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/do1DelayTime"/>
@@ -226,6 +230,8 @@
                     android:id="@+id/do2DelayTimeBar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:min="1"
+                    android:max="1800"
                     app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/do2DelayTime"/>
@@ -241,6 +247,8 @@
                     android:id="@+id/do2PulseTimeBar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:min="1"
+                    android:max="80"
                     app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/do2PulseTime"/>
@@ -278,6 +286,7 @@
                 android:textColor="@color/colorMain"
                 android:background="@color/colorPrimary"
                 android:text="@string/trigger"
+                android:onClick="@{()->viewModel.triggerEvent()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -288,7 +297,7 @@
                 android:textSize="32dp"
                 tools:text="@string/do_display_time"
                 tools:visibility="visible"
-                android:background="@color/colorAccentSemi"
+                android:background="@drawable/round_sec_tooltip"
                 android:textColor="@color/colorMain"
                 android:visibility="invisible"
                 android:id="@+id/displaySeekbarTime"
@@ -297,9 +306,62 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
-                android:textAlignment="center"
-                android:gravity="center" app:layout_constraintTop_toBottomOf="@+id/constraintDO2"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/constraintDO2"
                 app:layout_constraintBottom_toTopOf="@+id/trigger"/>
+        <TextView
+                android:text="@string/trigger_do1_too_frequent"
+                android:layout_width="wrap_content"
+                android:background="@color/colorPrimaryDarkSemi"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/do1ToFrequent"
+                android:padding="8dp"
+                android:textColor="@color/colorMain"
+                android:layout_marginEnd="8dp"
+                android:visibility="@{viewModel.isDO1TriggeredTooOften? View.VISIBLE:View.INVISIBLE}"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="@+id/constraintDO1"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintDO1"
+                app:layout_constraintTop_toTopOf="@+id/constraintDO1"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+        <TextView
+                android:text="@string/trigger_do2_too_frequent"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorMain"
+                android:background="@color/colorPrimaryDarkSemi"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:visibility="@{viewModel.isDO2TriggeredTooOften? View.VISIBLE:View.INVISIBLE}"
+                tools:visibility="visible"
+                android:id="@+id/do2ToFrequent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="@+id/constraintDO2"
+                app:layout_constraintTop_toTopOf="@+id/constraintDO2"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintDO2"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+        <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp" app:srcCompat="@drawable/light_off"
+                android:id="@+id/do1Light"
+                app:layout_constraintStart_toStartOf="@+id/dO1Switch"
+                app:layout_constraintEnd_toEndOf="@+id/dO1Switch"
+                app:layout_constraintTop_toTopOf="@+id/constraintDO1"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintDO1"/>
+        <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp" app:srcCompat="@drawable/light_on"
+                android:id="@+id/do2Light" app:layout_constraintStart_toStartOf="@+id/dO2Switch"
+                app:layout_constraintEnd_toEndOf="@+id/dO2Switch"
+                app:layout_constraintTop_toTopOf="@+id/constraintDO2"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintDO2"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
