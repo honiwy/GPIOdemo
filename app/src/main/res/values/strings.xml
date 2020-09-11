@@ -11,4 +11,5 @@
     <string name="pulse_time">Pulse Time</string>
     <string name="delay_time">Delay Time</string>
     <string name="trigger">Trigger</string>
+    <string name="trigger_toast">Oh! You just trigger an event!</string>
 </resources>

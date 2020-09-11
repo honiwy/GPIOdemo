@@ -47,15 +47,36 @@ class MainViewModel : ViewModel() {
     val do1DelaySec: LiveData<Int>
         get() = _do1DelaySec
 
+    fun changeDo1DelayTime(sec: Int){
+        _do1DelaySec.value = sec
+    }
+
     private val _do2PulseSec = MutableLiveData<Int>()
 
     val do2PulseSec: LiveData<Int>
         get() = _do2PulseSec
 
+    fun changeDo2PulseTime(sec: Int){
+        _do2PulseSec.value = sec
+    }
+
     private val _do2DelaySec = MutableLiveData<Int>()
 
     val do2DelaySec: LiveData<Int>
         get() = _do2DelaySec
+
+    fun changeDo2DelayTime(sec: Int){
+        _do2DelaySec.value = sec
+    }
+
+    private val _seekBarDisplayValue = MutableLiveData<Int>()
+
+    val seekBarDisplayValue: LiveData<Int>
+        get() = _seekBarDisplayValue
+
+    fun changeSeekBarDisplay(sec: Int){
+        _seekBarDisplayValue.value = sec
+    }
 
     init {
         _isDiEnabled.value = false
@@ -65,5 +86,6 @@ class MainViewModel : ViewModel() {
         _do1DelaySec.value = 1
         _do2PulseSec.value = 1
         _do2DelaySec.value = 1
+        _seekBarDisplayValue.value = 1
     }
 }
