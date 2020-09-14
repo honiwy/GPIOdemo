@@ -113,6 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:checked="true"
+                        android:onClick="@{()->viewModel.changeDO1Light(true)}"
                         android:text="@string/normal_open"/>
 
                 <RadioButton
@@ -120,6 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
+                        android:onClick="@{()->viewModel.changeDO1Light(false)}"
                         android:text="@string/normal_close"/>
             </RadioGroup>
 
@@ -217,6 +219,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:checked="true"
+                        android:onClick="@{()->viewModel.changeDO2Light(true)}"
                         android:text="@string/normal_open"/>
 
                 <RadioButton
@@ -224,6 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
+                        android:onClick="@{()->viewModel.changeDO2Light(false)}"
                         android:text="@string/normal_close"/>
             </RadioGroup>
             <SeekBar
@@ -312,7 +316,7 @@
         <TextView
                 android:text="@string/trigger_do1_too_frequent"
                 android:layout_width="wrap_content"
-                android:background="@color/colorPrimaryDarkSemi"
+                android:background="@drawable/round_too_often_tooltip"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:id="@+id/do1ToFrequent"
@@ -332,7 +336,7 @@
                 android:text="@string/trigger_do2_too_frequent"
                 android:layout_width="wrap_content"
                 android:textColor="@color/colorMain"
-                android:background="@color/colorPrimaryDarkSemi"
+                android:background="@drawable/round_too_often_tooltip"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -349,17 +353,19 @@
                 android:layout_marginBottom="8dp"/>
         <ImageView
                 android:layout_width="40dp"
-                android:layout_height="40dp" app:srcCompat="@drawable/light_off"
+                android:layout_height="40dp"
+                tools:background="@drawable/light_on"
+                android:background="@{viewModel.isDO1LightOn ? @drawable/light_on: @drawable/light_off}"
                 android:id="@+id/do1Light"
                 app:layout_constraintStart_toStartOf="@+id/dO1Switch"
-                app:layout_constraintEnd_toEndOf="@+id/dO1Switch"
                 app:layout_constraintTop_toTopOf="@+id/constraintDO1"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintDO1"/>
         <ImageView
                 android:layout_width="40dp"
-                android:layout_height="40dp" app:srcCompat="@drawable/light_on"
+                android:layout_height="40dp"
+                tools:background="@drawable/light_on"
+                android:background="@{viewModel.isDO2LightOn ? @drawable/light_on: @drawable/light_off}"
                 android:id="@+id/do2Light" app:layout_constraintStart_toStartOf="@+id/dO2Switch"
-                app:layout_constraintEnd_toEndOf="@+id/dO2Switch"
                 app:layout_constraintTop_toTopOf="@+id/constraintDO2"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintDO2"/>
 
