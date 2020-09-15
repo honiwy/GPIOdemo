@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:checked="true"
-                        android:onClick="@{()->viewModel.changeDO1Light(true)}"
+                        android:onClick="@{()->viewModel.changeDO1NormalStatus(true)}"
                         android:text="@string/normal_open"/>
 
                 <RadioButton
@@ -121,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:onClick="@{()->viewModel.changeDO1Light(false)}"
+                        android:onClick="@{()->viewModel.changeDO1NormalStatus(false)}"
                         android:text="@string/normal_close"/>
             </RadioGroup>
 
@@ -219,7 +219,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:checked="true"
-                        android:onClick="@{()->viewModel.changeDO2Light(true)}"
+                        android:onClick="@{()->viewModel.changeDO2NormalStatus(true)}"
                         android:text="@string/normal_open"/>
 
                 <RadioButton
@@ -227,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:onClick="@{()->viewModel.changeDO2Light(false)}"
+                        android:onClick="@{()->viewModel.changeDO2NormalStatus(false)}"
                         android:text="@string/normal_close"/>
             </RadioGroup>
             <SeekBar
@@ -283,7 +283,7 @@
         <Button
                 android:id="@+id/trigger"
                 android:layout_width="0dp"
-                android:layout_height="32dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
