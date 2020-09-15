@@ -1,373 +1,439 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        <variable name="viewModel" type="com.avc.app.gpiodemo.ui.main.MainViewModel"/>
-        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.avc.app.gpiodemo.ui.main.MainViewModel" />
+
+        <import type="android.view.View" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorMain"
-            tools:context=".ui.main.MainFragment">
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorMain"
+        tools:context=".ui.main.MainFragment">
 
         <TextView
-                android:id="@+id/digitalInput"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:text="@string/digital_input"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/digitalInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/digital_input"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Switch
-                android:id="@+id/diSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/di"
-                android:textSize="16dp"
-                android:onClick="@{()->viewModel.clickDiSwitch()}"
-                app:layout_constraintStart_toStartOf="@+id/digitalInput"
-                app:layout_constraintTop_toBottomOf="@+id/digitalInput"/>
+            android:id="@+id/diSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:onClick="@{()->viewModel.clickDiSwitch()}"
+            android:text="@string/di"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/digitalInput"
+            app:layout_constraintTop_toBottomOf="@+id/digitalInput" />
 
         <RadioGroup
-                android:id="@+id/digitalInputNormalStatus"
-                android:layout_width="0dp"
+            android:id="@+id/digitalInputNormalStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.isDiEnabled? View.VISIBLE:View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/diSwitch"
+            app:layout_constraintTop_toTopOf="@+id/diSwitch">
+
+            <RadioButton
+                android:id="@+id/diNormalOpen"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="horizontal"
-                android:visibility="@{viewModel.isDiEnabled? View.VISIBLE:View.INVISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/diSwitch"
-                app:layout_constraintTop_toTopOf="@+id/diSwitch">
+                android:layout_weight="0.5"
+                android:checked="true"
+                android:text="@string/normal_open" />
 
             <RadioButton
-                    android:id="@+id/diNormalOpen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:checked="true"
-                    android:text="@string/normal_open"/>
-
-            <RadioButton
-                    android:id="@+id/diNormalClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="@string/normal_close"/>
+                android:id="@+id/diNormalClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/normal_close" />
 
         </RadioGroup>
 
         <TextView
-                android:id="@+id/digitalOutput"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:text="@string/digital_output"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/diSwitch"/>
+            android:id="@+id/digitalOutput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/digital_output"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/diSwitch" />
 
         <Switch
-                android:id="@+id/dO1Switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/do1"
-                android:textSize="16dp"
-                android:onClick="@{()->viewModel.clickDo1Switch()}"
-                app:layout_constraintStart_toStartOf="@+id/digitalOutput"
-                app:layout_constraintTop_toBottomOf="@+id/digitalOutput"/>
+            android:id="@+id/dO1Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:onClick="@{()->viewModel.clickDo1Switch()}"
+            android:text="@string/do1"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/digitalOutput"
+            app:layout_constraintTop_toBottomOf="@+id/digitalOutput" />
+
+        <ImageView
+            android:id="@+id/do1Light"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@{viewModel.isDO1LightOn ? @drawable/light_on: @drawable/light_off}"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintDO1"
+            app:layout_constraintStart_toStartOf="@+id/dO1Switch"
+            app:layout_constraintTop_toTopOf="@+id/constraintDO1"
+            tools:background="@drawable/light_on" />
+
+        <TextView
+            android:id="@+id/countDownDO1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/round_too_often_tooltip"
+            android:gravity="center"
+            android:text="@{Integer.toString(viewModel.countDownDO1)}"
+            android:textColor="@color/colorMain"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.countDownDO1>0? View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/do1Light"
+            app:layout_constraintEnd_toStartOf="@+id/constraintDO1"
+            app:layout_constraintStart_toEndOf="@+id/do1Light"
+            app:layout_constraintTop_toTopOf="@+id/do1Light"
+            tools:text="15" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintDO1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/dO1Switch"
-                android:layout_marginStart="16dp"
-                android:visibility="@{viewModel.isDo1Enabled? View.VISIBLE:View.INVISIBLE}"
-                app:layout_constraintTop_toTopOf="@+id/dO1Switch"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp">
+            android:id="@+id/constraintDO1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="@{viewModel.isDo1Enabled? View.VISIBLE:View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dO1Switch"
+            app:layout_constraintTop_toTopOf="@+id/dO1Switch">
 
             <RadioGroup
-                    android:id="@+id/dO1NormalStatus"
-                    android:layout_width="0dp"
+                android:id="@+id/dO1NormalStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintDO1">
+
+                <RadioButton
+                    android:id="@+id/do1NormalOpen"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toTopOf="@+id/constraintDO1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    android:layout_weight="0.5"
+                    android:checked="true"
+                    android:onClick="@{()->viewModel.changeDO1NormalStatus(true)}"
+                    android:text="@string/normal_open" />
 
                 <RadioButton
-                        android:id="@+id/do1NormalOpen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:checked="true"
-                        android:onClick="@{()->viewModel.changeDO1NormalStatus(true)}"
-                        android:text="@string/normal_open"/>
-
-                <RadioButton
-                        android:id="@+id/do1NormalClose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:onClick="@{()->viewModel.changeDO1NormalStatus(false)}"
-                        android:text="@string/normal_close"/>
+                    android:id="@+id/do1NormalClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:onClick="@{()->viewModel.changeDO1NormalStatus(false)}"
+                    android:text="@string/normal_close" />
             </RadioGroup>
 
             <TextView
-                    android:id="@+id/do1PulseTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/pulse_time"
-                    app:layout_constraintStart_toStartOf="@+id/constraintDO1"
-                    app:layout_constraintTop_toBottomOf="@+id/dO1NormalStatus" android:layout_marginStart="8dp"/>
+                android:id="@+id/do1PulseTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/pulse_time"
+                app:layout_constraintStart_toStartOf="@+id/constraintDO1"
+                app:layout_constraintTop_toBottomOf="@+id/dO1NormalStatus" />
 
             <SeekBar
-                    android:id="@+id/do1PulseTimeBar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:min="1"
-                    android:max="80"
-                    app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/do1PulseTime"/>
+                android:id="@+id/do1PulseTimeBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="80"
+                android:min="1"
+                app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/do1PulseTime" />
 
             <TextView
-                    android:id="@+id/do1DelayTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/delay_time"
-                    app:layout_constraintStart_toStartOf="@+id/dO1NormalStatus"
-                    app:layout_constraintTop_toBottomOf="@+id/do1PulseTimeBar" android:layout_marginStart="8dp"/>
+                android:id="@+id/do1DelayTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/delay_time"
+                app:layout_constraintStart_toStartOf="@+id/dO1NormalStatus"
+                app:layout_constraintTop_toBottomOf="@+id/do1PulseTimeBar" />
 
             <SeekBar
-                    android:id="@+id/do1DelayTimeBar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:min="1"
-                    android:max="1800"
-                    app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/do1DelayTime"/>
+                android:id="@+id/do1DelayTimeBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="1800"
+                android:min="1"
+                app:layout_constraintEnd_toEndOf="@+id/dO1NormalStatus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/do1DelayTime" />
+
             <TextView
-                    tools:text="@string/do_display_time"
-                    app:displayTime="@{viewModel.do1PulseSec}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/do1PulseSec"
-                    app:layout_constraintStart_toEndOf="@+id/do1PulseTime"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/do1PulseTime"/>
+                android:id="@+id/do1PulseSec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:displayTime="@{viewModel.do1PulseSec}"
+                app:layout_constraintBaseline_toBaselineOf="@+id/do1PulseTime"
+                app:layout_constraintStart_toEndOf="@+id/do1PulseTime"
+                tools:text="@string/do_display_time" />
+
             <TextView
-                    tools:text="@string/do_display_time"
-                    app:displayTime="@{viewModel.do1DelaySec}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/do1DelaySec"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/do1DelayTime"
-                    app:layout_constraintStart_toEndOf="@+id/do1DelayTime" android:layout_marginStart="8dp"/>
+                android:id="@+id/do1DelaySec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:displayTime="@{viewModel.do1DelaySec}"
+                app:layout_constraintBaseline_toBaselineOf="@+id/do1DelayTime"
+                app:layout_constraintStart_toEndOf="@+id/do1DelayTime"
+                tools:text="@string/do_display_time" />
+
+            <TextView
+                android:id="@+id/do1ToFrequent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_too_often_tooltip"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/trigger_do1_too_frequent"
+                android:textColor="@color/colorMain"
+                android:visibility="@{viewModel.isDO1TriggeredTooOften? View.VISIBLE:View.INVISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintDO1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/constraintDO1"
+                app:layout_constraintTop_toTopOf="@+id/constraintDO1"
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <Switch
-                android:id="@+id/dO2Switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/do2"
-                android:textSize="16dp"
-                android:onClick="@{()->viewModel.clickDo2Switch()}"
-                app:layout_constraintStart_toStartOf="@+id/digitalOutput"
-                app:layout_constraintTop_toBottomOf="@+id/constraintDO1"/>
+            android:id="@+id/dO2Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:onClick="@{()->viewModel.clickDo2Switch()}"
+            android:text="@string/do2"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/digitalOutput"
+            app:layout_constraintTop_toBottomOf="@+id/constraintDO1" />
+
+        <ImageView
+            android:id="@+id/do2Light"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@{viewModel.isDO2LightOn ? @drawable/light_on: @drawable/light_off}"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintDO2"
+            app:layout_constraintStart_toStartOf="@+id/dO2Switch"
+            app:layout_constraintTop_toTopOf="@+id/constraintDO2"
+            tools:background="@drawable/light_on" />
+
+        <TextView
+            android:id="@+id/countDownDO2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/round_too_often_tooltip"
+            android:gravity="center"
+            android:text="@{Integer.toString(viewModel.countDownDO2)}"
+            android:textColor="@color/colorMain"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.countDownDO2>0? View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/do2Light"
+            app:layout_constraintEnd_toStartOf="@+id/constraintDO2"
+            app:layout_constraintStart_toEndOf="@+id/do2Light"
+            app:layout_constraintTop_toTopOf="@+id/do2Light"
+            tools:text="15" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/constraintDO2"
-                android:layout_marginStart="16dp"
-                android:visibility="@{viewModel.isDo2Enabled? View.VISIBLE:View.INVISIBLE}"
-                app:layout_constraintTop_toTopOf="@+id/dO2Switch"
-                app:layout_constraintStart_toEndOf="@+id/dO2Switch"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp">
+            android:id="@+id/constraintDO2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="@{viewModel.isDo2Enabled? View.VISIBLE:View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dO2Switch"
+            app:layout_constraintTop_toTopOf="@+id/dO2Switch">
 
             <RadioGroup
-                    android:id="@+id/dO2NormalStatus"
-                    android:layout_width="0dp"
+                android:id="@+id/dO2NormalStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/do2NormalOpen"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    android:layout_weight="0.5"
+                    android:checked="true"
+                    android:onClick="@{()->viewModel.changeDO2NormalStatus(true)}"
+                    android:text="@string/normal_open" />
 
                 <RadioButton
-                        android:id="@+id/do2NormalOpen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:checked="true"
-                        android:onClick="@{()->viewModel.changeDO2NormalStatus(true)}"
-                        android:text="@string/normal_open"/>
-
-                <RadioButton
-                        android:id="@+id/do2NormalClose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:onClick="@{()->viewModel.changeDO2NormalStatus(false)}"
-                        android:text="@string/normal_close"/>
+                    android:id="@+id/do2NormalClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:onClick="@{()->viewModel.changeDO2NormalStatus(false)}"
+                    android:text="@string/normal_close" />
             </RadioGroup>
+
             <SeekBar
-                    android:id="@+id/do2DelayTimeBar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:min="1"
-                    android:max="1800"
-                    app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/do2DelayTime"/>
+                android:id="@+id/do2DelayTimeBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="1800"
+                android:min="1"
+                app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/do2DelayTime" />
+
             <TextView
-                    android:id="@+id/do2PulseTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/pulse_time"
-                    app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
-                    app:layout_constraintTop_toBottomOf="@+id/dO2NormalStatus" android:layout_marginStart="8dp"/>
+                android:id="@+id/do2PulseTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/pulse_time"
+                app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
+                app:layout_constraintTop_toBottomOf="@+id/dO2NormalStatus" />
+
             <SeekBar
-                    android:id="@+id/do2PulseTimeBar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:min="1"
-                    android:max="80"
-                    app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/do2PulseTime"/>
+                android:id="@+id/do2PulseTimeBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="80"
+                android:min="1"
+                app:layout_constraintEnd_toEndOf="@+id/dO2NormalStatus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/do2PulseTime" />
+
             <TextView
-                    android:id="@+id/do2DelayTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/delay_time"
-                    app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
-                    app:layout_constraintTop_toBottomOf="@+id/do2PulseTimeBar" android:layout_marginStart="8dp"/>
+                android:id="@+id/do2DelayTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/delay_time"
+                app:layout_constraintStart_toStartOf="@+id/dO2NormalStatus"
+                app:layout_constraintTop_toBottomOf="@+id/do2PulseTimeBar" />
+
             <TextView
-                    tools:text="@string/do_display_time"
-                    app:displayTime="@{viewModel.do2PulseSec}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/do2PulseSec" app:layout_constraintStart_toEndOf="@+id/do2PulseTime"
-                    android:layout_marginStart="8dp" app:layout_constraintBaseline_toBaselineOf="@+id/do2PulseTime"/>
+                android:id="@+id/do2PulseSec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:displayTime="@{viewModel.do2PulseSec}"
+                app:layout_constraintBaseline_toBaselineOf="@+id/do2PulseTime"
+                app:layout_constraintStart_toEndOf="@+id/do2PulseTime"
+                tools:text="@string/do_display_time" />
+
             <TextView
-                    tools:text="@string/do_display_time"
-                    app:displayTime="@{viewModel.do2DelaySec}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/do2DelaySec" app:layout_constraintStart_toEndOf="@+id/do2DelayTime"
-                    android:layout_marginStart="8dp" app:layout_constraintBaseline_toBaselineOf="@+id/do2DelayTime"/>
+                android:id="@+id/do2DelaySec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:displayTime="@{viewModel.do2DelaySec}"
+                app:layout_constraintBaseline_toBaselineOf="@+id/do2DelayTime"
+                app:layout_constraintStart_toEndOf="@+id/do2DelayTime"
+                tools:text="@string/do_display_time" />
+
+            <TextView
+                android:id="@+id/do2ToFrequent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_too_often_tooltip"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/trigger_do2_too_frequent"
+                android:textColor="@color/colorMain"
+                android:visibility="@{viewModel.isDO2TriggeredTooOften? View.VISIBLE:View.INVISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintDO2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/constraintDO2"
+                app:layout_constraintTop_toTopOf="@+id/constraintDO2"
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-                android:id="@+id/trigger"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/colorMain"
-                android:background="@color/colorPrimary"
-                android:text="@string/trigger"
-                android:onClick="@{()->viewModel.triggerEvent()}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+            android:id="@+id/trigger"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
+            android:onClick="@{()->viewModel.triggerEvent()}"
+            android:text="@string/trigger"
+            android:textColor="@color/colorMain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
-                android:text="@{Integer.toString(viewModel.seekBarDisplayValue)}"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:textSize="32dp"
-                tools:text="@string/do_display_time"
-                tools:visibility="visible"
-                android:background="@drawable/round_sec_tooltip"
-                android:textColor="@color/colorMain"
-                android:visibility="invisible"
-                android:id="@+id/displaySeekbarTime"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@+id/constraintDO2"
-                app:layout_constraintBottom_toTopOf="@+id/trigger"/>
-        <TextView
-                android:text="@string/trigger_do1_too_frequent"
-                android:layout_width="wrap_content"
-                android:background="@drawable/round_too_often_tooltip"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:id="@+id/do1ToFrequent"
-                android:padding="8dp"
-                android:textColor="@color/colorMain"
-                android:layout_marginEnd="8dp"
-                android:visibility="@{viewModel.isDO1TriggeredTooOften? View.VISIBLE:View.INVISIBLE}"
-                tools:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="@+id/constraintDO1"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintDO1"
-                app:layout_constraintTop_toTopOf="@+id/constraintDO1"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
-        <TextView
-                android:text="@string/trigger_do2_too_frequent"
-                android:layout_width="wrap_content"
-                android:textColor="@color/colorMain"
-                android:background="@drawable/round_too_often_tooltip"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:visibility="@{viewModel.isDO2TriggeredTooOften? View.VISIBLE:View.INVISIBLE}"
-                tools:visibility="visible"
-                android:id="@+id/do2ToFrequent"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="@+id/constraintDO2"
-                app:layout_constraintTop_toTopOf="@+id/constraintDO2"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintDO2"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
-        <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                tools:background="@drawable/light_on"
-                android:background="@{viewModel.isDO1LightOn ? @drawable/light_on: @drawable/light_off}"
-                android:id="@+id/do1Light"
-                app:layout_constraintStart_toStartOf="@+id/dO1Switch"
-                app:layout_constraintTop_toTopOf="@+id/constraintDO1"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintDO1"/>
-        <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                tools:background="@drawable/light_on"
-                android:background="@{viewModel.isDO2LightOn ? @drawable/light_on: @drawable/light_off}"
-                android:id="@+id/do2Light" app:layout_constraintStart_toStartOf="@+id/dO2Switch"
-                app:layout_constraintTop_toTopOf="@+id/constraintDO2"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintDO2"/>
+            android:id="@+id/displaySeekbarTime"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_sec_tooltip"
+            android:gravity="center"
+            android:text="@{Integer.toString(viewModel.seekBarDisplayValue)}"
+            android:textColor="@color/colorMain"
+            android:textSize="32dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/trigger"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintDO2"
+            tools:text="@string/do_display_time"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

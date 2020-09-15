@@ -1,5 +1,6 @@
 package com.avc.app.gpiodemo.ui.main
 
+import android.os.CountDownTimer
 import android.os.Handler
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -63,6 +64,27 @@ class MainViewModel : ViewModel() {
     val isDO1LightOn: LiveData<Boolean>
         get() = _isDO1LightOn
 
+    private val _countDownDO1 = MutableLiveData<Int>()
+    val countDownDO1: LiveData<Int>
+        get() = _countDownDO1
+
+    private lateinit var countDownDO1Timer: CountDownTimer
+
+    private fun startCountDownDO1Timer(timeCountInMilliSeconds: Long) {
+        countDownDO1Timer =
+                object : CountDownTimer(timeCountInMilliSeconds, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        _countDownDO1.value = _countDownDO1.value?.minus(1)
+                    }
+
+                    override fun onFinish() {
+
+                    }
+                }
+        countDownDO1Timer.start()
+    }
+
+
     //DO2
     private val _isDo2Enabled = MutableLiveData<Boolean>()
     val isDo2Enabled: LiveData<Boolean>
@@ -107,6 +129,26 @@ class MainViewModel : ViewModel() {
     val isDO2LightOn: LiveData<Boolean>
         get() = _isDO2LightOn
 
+    private val _countDownDO2 = MutableLiveData<Int>()
+    val countDownDO2: LiveData<Int>
+        get() = _countDownDO2
+
+    private lateinit var countDownDO2Timer: CountDownTimer
+
+    private fun startCountDownDO2Timer(timeCountInMilliSeconds: Long) {
+        countDownDO2Timer =
+                object : CountDownTimer(timeCountInMilliSeconds, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        _countDownDO2.value = _countDownDO2.value?.minus(1)
+                    }
+
+                    override fun onFinish() {
+
+                    }
+                }
+        countDownDO2Timer.start()
+    }
+
 
     private val _seekBarDisplayValue = MutableLiveData<Int>()
     val seekBarDisplayValue: LiveData<Int>
@@ -128,6 +170,8 @@ class MainViewModel : ViewModel() {
         _isDO2TriggeredTooOften.value = false
         _isDO1LightOn.value = true
         _isDO2LightOn.value = true
+        _countDownDO1.value = 0
+        _countDownDO2.value = 0
     }
 
     fun triggerEvent() {
@@ -189,6 +233,8 @@ class MainViewModel : ViewModel() {
         var delayTime = 15L
         _do1PulseSec.value?.let {
             delayTime = it * 1000L
+            _countDownDO1.value = it
+            startCountDownDO1Timer(it.times(1000L))
         }
         mGPIO1Handler.postDelayed(mGPIO1Runnable, delayTime)
     }
@@ -198,6 +244,8 @@ class MainViewModel : ViewModel() {
         var delayTime = 15L
         _do2PulseSec.value?.let {
             delayTime = it * 1000L
+            _countDownDO2.value = it
+            startCountDownDO2Timer(it.times(1000L))
         }
         mGPIO2Handler.postDelayed(mGPIO2Runnable, delayTime)
     }
