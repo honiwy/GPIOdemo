@@ -2,16 +2,17 @@ package com.avc.app.gpiodemo
 
 import android.app.Application
 import android.content.Context
+import kotlin.properties.Delegates
 
 class GpioDemoApplication : Application() {
 
 
     companion object {
-        lateinit var appContext: Context
+        var instance: GpioDemoApplication by Delegates.notNull()
     }
 
     override fun onCreate() {
         super.onCreate()
-        appContext = applicationContext
+        instance = this
     }
 }

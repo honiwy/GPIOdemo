@@ -7,16 +7,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.avc.app.gpiodemo.GpioDemoApplication
+import com.avc.app.gpiodemo.GpioSharedPref
 import com.avc.app.gpiodemo.R
 
 class MainViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
     private val _isDiEnabled = MutableLiveData<Boolean>()
     val isDiEnabled: LiveData<Boolean>
         get() = _isDiEnabled
 
     fun clickDiSwitch() {
         _isDiEnabled.value = (_isDiEnabled.value == false)
+        GpioSharedPref.isDiEnabled = _isDiEnabled.value
+    }
+
+    private val _isDiNormalOpen = MutableLiveData<Boolean>()
+    val isDiNormalOpen: LiveData<Boolean>
+        get() = _isDiNormalOpen
+
+    fun changeDiNormalStatus(isNormalOpen: Boolean) {
+        //todo: change DI
+        _isDiNormalOpen.value = isNormalOpen
+        GpioSharedPref.diNormalOpen = isNormalOpen
     }
 
 
@@ -27,6 +38,7 @@ class MainViewModel : ViewModel() {
 
     fun clickDo1Switch() {
         _isDo1Enabled.value = (_isDo1Enabled.value == false)
+        GpioSharedPref.isDo1Enabled = _isDo1Enabled.value
     }
 
     private val _isDO1NormalOpen = MutableLiveData<Boolean>()
@@ -34,8 +46,10 @@ class MainViewModel : ViewModel() {
         get() = _isDO1NormalOpen
 
     fun changeDO1NormalStatus(isNormalOpen: Boolean) {
+        //todo: change DO1 light
         _isDO1NormalOpen.value = isNormalOpen
         _isDO1LightOn.value = isNormalOpen
+        GpioSharedPref.do1NormalOpen = isNormalOpen
     }
 
     private val _do1PulseSec = MutableLiveData<Int>()
@@ -44,6 +58,7 @@ class MainViewModel : ViewModel() {
 
     fun changeDo1PulseTime(sec: Int) {
         _do1PulseSec.value = sec
+        GpioSharedPref.do1PulseTime = sec
     }
 
     private val _do1DelaySec = MutableLiveData<Int>()
@@ -52,6 +67,7 @@ class MainViewModel : ViewModel() {
 
     fun changeDo1DelayTime(sec: Int) {
         _do1DelaySec.value = sec
+        GpioSharedPref.do1DelayTime = sec
     }
 
     private val _isDO1TriggeredTooOften = MutableLiveData<Boolean>()
@@ -78,7 +94,7 @@ class MainViewModel : ViewModel() {
                     }
 
                     override fun onFinish() {
-
+                        _countDownDO1.value = 0
                     }
                 }
         countDownDO1Timer.start()
@@ -92,6 +108,7 @@ class MainViewModel : ViewModel() {
 
     fun clickDo2Switch() {
         _isDo2Enabled.value = (_isDo2Enabled.value == false)
+        GpioSharedPref.isDo2Enabled = _isDo2Enabled.value
     }
 
     private val _isDO2NormalOpen = MutableLiveData<Boolean>()
@@ -99,8 +116,10 @@ class MainViewModel : ViewModel() {
         get() = _isDO2NormalOpen
 
     fun changeDO2NormalStatus(isNormalOpen: Boolean) {
+        //todo: change DO2 light
         _isDO2NormalOpen.value = isNormalOpen
         _isDO2LightOn.value = isNormalOpen
+        GpioSharedPref.do2NormalOpen = isNormalOpen
     }
 
     private val _do2PulseSec = MutableLiveData<Int>()
@@ -109,6 +128,8 @@ class MainViewModel : ViewModel() {
 
     fun changeDo2PulseTime(sec: Int) {
         _do2PulseSec.value = sec
+        GpioSharedPref.do2PulseTime = sec
+
     }
 
     private val _do2DelaySec = MutableLiveData<Int>()
@@ -117,6 +138,7 @@ class MainViewModel : ViewModel() {
 
     fun changeDo2DelayTime(sec: Int) {
         _do2DelaySec.value = sec
+        GpioSharedPref.do2DelayTime = sec
     }
 
     private val _isDO2TriggeredTooOften = MutableLiveData<Boolean>()
@@ -143,7 +165,7 @@ class MainViewModel : ViewModel() {
                     }
 
                     override fun onFinish() {
-
+                        _countDownDO2.value = 0
                     }
                 }
         countDownDO2Timer.start()
@@ -159,32 +181,31 @@ class MainViewModel : ViewModel() {
     }
 
     init {
-        _isDiEnabled.value = false
-        _isDo1Enabled.value = false
-        _isDo2Enabled.value = false
-        _do1PulseSec.value = 1
-        _do1DelaySec.value = 1
-        _do2PulseSec.value = 1
-        _do2DelaySec.value = 1
+        _isDiEnabled.value = GpioSharedPref.isDiEnabled
+        _isDiNormalOpen.value = GpioSharedPref.diNormalOpen
+
+        _isDo1Enabled.value = GpioSharedPref.isDo1Enabled
+        _isDO1NormalOpen.value = GpioSharedPref.do1NormalOpen
+        _do1PulseSec.value = GpioSharedPref.do1PulseTime
+        _do1DelaySec.value = GpioSharedPref.do1DelayTime
         _isDO1TriggeredTooOften.value = false
-        _isDO2TriggeredTooOften.value = false
-        _isDO1LightOn.value = true
-        _isDO2LightOn.value = true
+        _isDO1LightOn.value = GpioSharedPref.do1NormalOpen //Because not event is occurred in the beginning
         _countDownDO1.value = 0
+
+        _isDo2Enabled.value = GpioSharedPref.isDo2Enabled
+        _isDO2NormalOpen.value = GpioSharedPref.do2NormalOpen
+        _do2PulseSec.value = GpioSharedPref.do2PulseTime
+        _do2DelaySec.value = GpioSharedPref.do2DelayTime
+        _isDO2TriggeredTooOften.value = false
+        _isDO2LightOn.value = GpioSharedPref.do2NormalOpen //Because not event is occurred in the beginning
         _countDownDO2.value = 0
     }
 
     fun triggerEvent() {
-        Toast.makeText(GpioDemoApplication.appContext, R.string.trigger_toast, Toast.LENGTH_SHORT).show()
-        if (_isDo1Enabled.value == true && isTimeToTriggerDO1()) {
-            triggerDO1()
-            //todo: trigger real do1 than close
-        }
+        Toast.makeText(GpioDemoApplication.instance, R.string.trigger_toast, Toast.LENGTH_SHORT).show()
+        if (_isDo1Enabled.value == true && isTimeToTriggerDO1()) triggerDO1()
 
-        if (_isDo2Enabled.value == true && isTimeToTriggerDO2()) {
-            triggerDO2()
-            //todo: trigger real do2 than close
-        }
+        if (_isDo2Enabled.value == true && isTimeToTriggerDO2()) triggerDO2()
     }
 
     private fun isTimeToTriggerDO1(): Boolean {
@@ -222,31 +243,29 @@ class MainViewModel : ViewModel() {
     private val mGPIO1Handler = Handler()
     private val mGPIO2Handler = Handler()
     private var mGPIO1Runnable = {
+        //todo: trigger real do1 than close
         _isDO1LightOn.value = (_isDO1LightOn.value == false)
     }
     private var mGPIO2Runnable = {
+        //todo: trigger real do2 than close
         _isDO2LightOn.value = (_isDO2LightOn.value == false)
     }
 
     private fun triggerDO1() {
-        _isDO1LightOn.value = (_isDO1NormalOpen.value == false)
-        var delayTime = 15L
-        _do1PulseSec.value?.let {
-            delayTime = it * 1000L
-            _countDownDO1.value = it
-            startCountDownDO1Timer(it.times(1000L))
+        mGPIO1Handler.post(mGPIO1Runnable)
+        _do1PulseSec.value?.apply {
+            _countDownDO1.value = this + 1 //for display value on UI
+            startCountDownDO1Timer(this * 1000L)
+            mGPIO1Handler.postDelayed(mGPIO1Runnable, this * 1000L)
         }
-        mGPIO1Handler.postDelayed(mGPIO1Runnable, delayTime)
     }
 
     private fun triggerDO2() {
-        _isDO2LightOn.value = (_isDO2NormalOpen.value == false)
-        var delayTime = 15L
-        _do2PulseSec.value?.let {
-            delayTime = it * 1000L
-            _countDownDO2.value = it
-            startCountDownDO2Timer(it.times(1000L))
+        mGPIO2Handler.post(mGPIO2Runnable)
+        _do2PulseSec.value?.apply {
+            _countDownDO2.value = this + 1 //for display value on UI
+            startCountDownDO2Timer(this * 1000L)
+            mGPIO2Handler.postDelayed(mGPIO2Runnable, this * 1000L)
         }
-        mGPIO2Handler.postDelayed(mGPIO2Runnable, delayTime)
     }
 }
