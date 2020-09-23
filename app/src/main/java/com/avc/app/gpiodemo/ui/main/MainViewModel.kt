@@ -74,7 +74,7 @@ class MainViewModel : ViewModel() {
     val isDO1TriggeredTooOften: LiveData<Boolean>
         get() = _isDO1TriggeredTooOften
 
-    private var do1LastTimeTriggered: Long = 0
+    private var do1NextActiveTime: Long = 0
 
     private val _isDO1LightOn = MutableLiveData<Boolean>()
     val isDO1LightOn: LiveData<Boolean>
@@ -145,7 +145,7 @@ class MainViewModel : ViewModel() {
     val isDO2TriggeredTooOften: LiveData<Boolean>
         get() = _isDO2TriggeredTooOften
 
-    private var do2LastTimeTriggered: Long = 0
+    private var do2NextActiveTime: Long = 0
 
     private val _isDO2LightOn = MutableLiveData<Boolean>()
     val isDO2LightOn: LiveData<Boolean>
@@ -211,8 +211,8 @@ class MainViewModel : ViewModel() {
     private fun isTimeToTriggerDO1(): Boolean {
         _do1PulseSec.value?.let { pulseSec ->
             _do1DelaySec.value?.let { delaySec ->
-                return if ((System.currentTimeMillis() - do1LastTimeTriggered) > (pulseSec + delaySec) * 1000) {
-                    do1LastTimeTriggered = System.currentTimeMillis()
+                return if (System.currentTimeMillis() > do1NextActiveTime) {
+                    do1NextActiveTime = System.currentTimeMillis() + 1000 * (pulseSec + delaySec)
                     _isDO1TriggeredTooOften.value = false
                     true
                 } else {
@@ -227,8 +227,8 @@ class MainViewModel : ViewModel() {
     private fun isTimeToTriggerDO2(): Boolean {
         _do2PulseSec.value?.let { pulseSec ->
             _do2DelaySec.value?.let { delaySec ->
-                return if ((System.currentTimeMillis() - do2LastTimeTriggered) > (pulseSec + delaySec) * 1000) {
-                    do2LastTimeTriggered = System.currentTimeMillis()
+                return if (System.currentTimeMillis() > do2NextActiveTime) {
+                    do2NextActiveTime = System.currentTimeMillis() + 1000 * (pulseSec + delaySec)
                     _isDO2TriggeredTooOften.value = false
                     true
                 } else {
